@@ -1,0 +1,13 @@
+video joylaydigan programma:
+	maqsadi:
+		1)Foydalanuvchi video kura olishi kerak.
+		2)Foydalanuvchi videoni faqat tasdiqlangan wifi orqali ko'ra olishi kerak.
+		3)Adminstrator video joylaydi.
+		4)
+		
+
+User
+admin
+category
+user
+video	
