@@ -11,9 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\Adminstrators\" />
+    <Folder Include="Repositories\Categories\" />
+    <Folder Include="Repositories\Videos\" />
+    <Folder Include="Repositories\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.151" />
+    <PackageReference Include="Npgsql" Version="7.0.4" />
   </ItemGroup>
 
 </Project>
