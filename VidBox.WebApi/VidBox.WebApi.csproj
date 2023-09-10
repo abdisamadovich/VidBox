@@ -12,9 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Configurations\Layers\" />
+    <Folder Include="Controllers\Adminstrator\Videos\" />
+    <Folder Include="Controllers\Users\" />
     <Folder Include="Middlewares\" />
-    <Folder Include="Configurations\" />
     <Folder Include="wwwroot\Videos\" />
   </ItemGroup>
 
