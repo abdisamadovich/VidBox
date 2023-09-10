@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Repositories\Adminstrators\" />
-    <Folder Include="Repositories\Categories\" />
     <Folder Include="Repositories\Videos\" />
     <Folder Include="Repositories\Users\" />
   </ItemGroup>
