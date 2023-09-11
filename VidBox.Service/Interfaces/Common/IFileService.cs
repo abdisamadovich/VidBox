@@ -4,14 +4,9 @@ namespace VidBox.Service.Interfaces.Common
 {
     public interface IFileService
     {
-        // returns sub path of this image
-        public Task<string> UploadImageAsync(IFormFile image);
+        // returns sub path of this video
+        public Task<string> UploadVideoAsync(IFormFile image);
 
-        public Task<bool> DeleteImageAsync(string subpath);
-
-        // returns sub path of this avatar
-        public Task<string> UploadAvatarAsync(IFormFile avatar);
-
-        public Task<bool> DeleteAvatarAsync(string subpath);
+        public Task<bool> DeleteVideoAsync(string subpath);
     }
 }

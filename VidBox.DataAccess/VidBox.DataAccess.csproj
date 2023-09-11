@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Repositories\Adminstrators\" />
     <Folder Include="Repositories\Videos\" />
-    <Folder Include="Repositories\Users\" />
   </ItemGroup>
 
   <ItemGroup>
