@@ -10,6 +10,6 @@ public static class DataAccessConfiguration
     {
         //-> DI containers, IoC containers
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-        //builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
     }
 }

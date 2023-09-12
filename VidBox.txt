@@ -10,4 +10,15 @@ User
 admin
 category
 user
-video	
+video
+
+1) User:
+	Ruyxatdan o'tadi.
+	Databasega saqlaydi. 
+	Video : GetAll, GetById, Searcheble - name bo'yicha, 
+	Category: GetAll, GetById 
+2) Admin:
+	User: GetAll, GetById,Delete
+	Category: GetAll, GetById, Post, Update, Delete
+	Video: GetAll, GetById, Post, Update, Delete 
+	
