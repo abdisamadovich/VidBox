@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using VidBox.DataAccess.Common.Interfaces;
 using VidBox.DataAccess.Interfaces.Users;
 using VidBox.DataAccess.Utils;
 using VidBox.DataAccess.ViewModels.Users;
@@ -126,6 +127,29 @@ public class UserRepository : BaseRepository, IUserRepository
         catch
         {
             return null;
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
+
+    public async Task<IList<UserViewModel>> SearchAsync(string search, PaginationParams @params)
+    {
+        try
+        {
+            await _connection.OpenAsync();
+
+            string query = $"SELECT * FROM public.users WHERE first_name ILIKE '%{search}%' " +
+                $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+
+            var user = await _connection.QueryAsync<UserViewModel>(query);
+
+            return user.ToList();
+        }
+        catch
+        {
+            return new List<UserViewModel>();
         }
         finally
         {
