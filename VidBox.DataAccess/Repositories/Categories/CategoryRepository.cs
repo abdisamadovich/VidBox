@@ -8,24 +8,9 @@ namespace VidBox.DataAccess.Repositories.Categories
 {
     public class CategoryRepository : BaseRepository, ICategoryRepository
     {
-        public async Task<long> CountAsync()
+        public Task<long> CountAsync()
         {
-            try
-            {
-                await _connection.OpenAsync();
-                string query = $"select count(*) from categories";
-                var result = await _connection.QuerySingleAsync<long>(query);
-
-                return result;
-            }
-            catch
-            {
-                return 0;
-            }
-            finally
-            {
-                await _connection.CloseAsync();
-            }
+            throw new NotImplementedException();
         }
 
         public async Task<int> CreateAsync(Category entity)
@@ -107,6 +92,11 @@ namespace VidBox.DataAccess.Repositories.Categories
             {
                 await _connection.CloseAsync();
             }
+        }
+
+        public Task<int> UpdateAsync(long id, Category entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

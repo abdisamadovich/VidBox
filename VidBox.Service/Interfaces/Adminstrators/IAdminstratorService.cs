@@ -1,6 +1,4 @@
-﻿using VidBox.DataAccess.Utils;
-using VidBox.DataAccess.ViewModels.Adminstrator;
-using VidBox.Service.Dtos.Adminstrators;
+﻿using VidBox.Service.Dtos.Adminstrators;
 
 namespace VidBox.Service.Interfaces.Adminstrators;
 

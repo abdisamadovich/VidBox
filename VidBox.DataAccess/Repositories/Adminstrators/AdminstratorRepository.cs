@@ -22,7 +22,7 @@ public class AdminstratorRepository : BaseRepository, IAdminstratorRepository
                 "salt, created_at, updated_at) VALUES (@Name, @PhoneNumber, @PhoneNumberConfirmed, @PasswordHash, " +
                     "@Salt, @CreatedAt, @UpdatedAt);";
 
-            return await _connection.ExecuteAsync(query,entity);            
+            return await _connection.ExecuteAsync(query, entity);
         }
         catch
         {
@@ -34,13 +34,89 @@ public class AdminstratorRepository : BaseRepository, IAdminstratorRepository
         }
     }
 
-    public Task<int> DeleteAsync(long id)
+    public async Task<int> DeleteAsync(long id)
+    {
+        try
+        {
+            await _connection.OpenAsync();
+            string query = "DELETE FROM adminstrators WHERE id=@Id";
+            var result = await _connection.ExecuteAsync(query, new { Id = id });
+
+            return result;
+        }
+        catch
+        {
+            return 0;
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
+
+    public Task<Adminstrator?> GetByIdAsync(long id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<AdminstratorViewModel?> GetByIdAsync(long id)
+    public async Task<AdminstratorViewModel?> GetByIdViewModelAsync(long id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _connection.OpenAsync();
+            string query = $"SELECT * FROM adminstrator WHERE id = @Id";
+            var result = await _connection.QuerySingleAsync<AdminstratorViewModel>(query, new { Id = id });
+
+            return result;
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
+
+    public async Task<Adminstrator?> GetByPhoneNumberAsync(string phoneNumber)
+    {
+        try
+        {
+            await _connection.OpenAsync();
+            string query = "SELECT * FROM adminstrators WHERE phone_number = @PhoneNumber";
+            var data = await _connection.QuerySingleAsync<Adminstrator>(query, new { PhoneNumber = phoneNumber });
+
+            return data;
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
+
+    public async Task<int> UpdateAsync(long id, Adminstrator entity)
+    {
+        try
+        {
+            await _connection.OpenAsync();
+            string query = "UPDATE public.adminstrators SET name=@Name, phone_number=@PhoneNumber, " +
+                "phone_number_confirmed=@PhoneNumberConfirmed, password_hash=@PasswordHash, salt=@Salt," +
+                    " updated_at=@UpdatedAt WHERE id={id};";
+
+            return await _connection.ExecuteAsync(query, entity);
+        }
+        catch
+        {
+            return 0;
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
     }
 }
