@@ -2,9 +2,8 @@
 
 namespace VidBox.DataAccess.Common.Interfaces
 {
-    public interface ISearchable<TModel>
+    public interface ISearchable<TViewModel>
     {
-        public Task<(int ItemsCount, IList<TModel>)> SearchAsync(string search,
-        PaginationParams @params);
+        public Task<IList<TViewModel>> SearchAsync(string search);
     }
 }

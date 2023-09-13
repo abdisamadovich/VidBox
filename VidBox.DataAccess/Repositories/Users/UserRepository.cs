@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using System.Numerics;
 using VidBox.DataAccess.Common.Interfaces;
 using VidBox.DataAccess.Interfaces.Users;
 using VidBox.DataAccess.Utils;
@@ -49,7 +50,7 @@ public class UserRepository : BaseRepository, IUserRepository
         {
             await _connection.CloseAsync();
         }
-    }   
+    }
 
     public async Task<int> DeleteAsync(long id)
     {
@@ -94,13 +95,18 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
-    public async Task<UserViewModel?> GetByIdAsync(long id)
+    public Task<User?> GetByIdAsync(long id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<UserViewModel?> GetByIdViewAsync(long id)
     {
         try
         {
             await _connection.OpenAsync();
-            string qeury = $"SELECT * FROM users where id=@Id";
-            var result = await _connection.QuerySingleAsync<UserViewModel>(qeury, new { Id = id });
+            string query = $"SELECT * FROM users where id=@Id";
+            var result = await _connection.QuerySingleAsync<UserViewModel>(query, new { Id = id });
 
             return result;
         }
@@ -114,13 +120,13 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
-    public async Task<User?> GetByPhoneAsync(string phone)
+    public async Task<User?> GetByPhoneNumberAsync(string phoneNumber)
     {
         try
         {
             await _connection.OpenAsync();
             string query = "SELECT * FROM users where phone_number = @PhoneNumber";
-            var data = await _connection.QuerySingleAsync<User>(query, new { PhoneNumber = phone });
+            var data = await _connection.QuerySingleAsync<User>(query, new { PhoneNumber = phoneNumber });
 
             return data;
         }
@@ -134,22 +140,41 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
-    public async Task<IList<UserViewModel>> SearchAsync(string search, PaginationParams @params)
+    public async Task<IList<UserViewModel>> SearchAsync(string search)
     {
         try
         {
             await _connection.OpenAsync();
+            string query = $"select * from users " +
+                $"where name ilike '%{search}%'";
 
-            string query = $"SELECT * FROM public.users WHERE first_name ILIKE '%{search}%' " +
-                $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+            var result = (await _connection.QueryAsync<UserViewModel>(query)).ToList();
+            return result;
+        }
+        catch (Exception)
+        {
+            return new List<UserViewModel>();
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
 
-            var user = await _connection.QueryAsync<UserViewModel>(query);
+    public async Task<int> UpdateAsync(long id, User entity)
+    {
+        try
+        {
+            await _connection.OpenAsync();
+            string query = "UPDATE public.users SET name=@Name, phone_number=@PhoneNumber," +
+                " phone_number_confirmed=@PhoneNumberConfirmed, password_hash=@PasswordHash, salt=@Salt," +
+                    " updated_at=@UpdatedAt WHERE id={id};";
 
-            return user.ToList();
+            return await _connection.ExecuteAsync(query, entity);
         }
         catch
         {
-            return new List<UserViewModel>();
+            return 0;
         }
         finally
         {

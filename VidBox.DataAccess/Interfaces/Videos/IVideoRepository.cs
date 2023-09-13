@@ -4,8 +4,6 @@ using VidBox.Domain.Entities.Videos;
 
 namespace VidBox.DataAccess.Interfaces.Videos
 {
-    public interface IVideoRepository : IRepository<Video, Video>, IGetAll<Video>,IUpdate<Video>
-    {
-        public Task<IList<Video>> SearchAsync(string search, PaginationParams @params);
-    }
+    public interface IVideoRepository : IRepository<Video>, IGetAll<Video>,ISearchable<Video>
+    {}
 }

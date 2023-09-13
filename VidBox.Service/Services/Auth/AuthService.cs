@@ -142,4 +142,38 @@ public class AuthService : IAuthService
 
         return dbResult > 0;
     }
+
+    public async Task<(bool Result, int CachedVerificationMinutes)> SendCodeForResetPasswordAsync(string phone)
+    {
+        var user = await _userRepository;
+        if (user is null) throw new UserNotFoundException();
+        VerificationDto verificationDto = new VerificationDto();
+        verificationDto.Attempt = 0;
+        verificationDto.CreatedAt = TimeHelper.GetDateTime();
+        //verificationDto.Code = CodeGenerator.GenerateRandomNumber();
+        verificationDto.Code = 11111;
+
+        if (_memoryCache.TryGetValue(VERIFY_RESET_CACHE_KEY + phone, out VerificationDto oldVerifcationDto))
+        {
+            _memoryCache.Remove(VERIFY_RESET_CACHE_KEY + phone);
+        }
+
+        _memoryCache.Set(VERIFY_RESET_CACHE_KEY + phone, verificationDto,
+            TimeSpan.FromMinutes(CACHED_MINUTES_FOR_VERIFICATION));
+
+        SmsMessage smsMessage = new SmsMessage();
+        smsMessage.Title = "On Med";
+        smsMessage.Content = "Sizning tasdiqlash kodingiz : " + verificationDto.Code;
+        smsMessage.Recipent = phone.Substring(1);
+
+
+        var smsResult = true; //await _smsSender.SendAsync(smsMessage);
+        if (smsResult is true) return (Result: true, CachedVerificationMinutes: CACHED_MINUTES_FOR_VERIFICATION);
+        else return (Result: false, CachedVerificationMinutes: 0);
+    }
+
+    public Task<(bool Result, string Token)> VerifyResetPasswordAsync(string phone, int code)
+    {
+        throw new NotImplementedException();
+    }
 }

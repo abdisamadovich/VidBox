@@ -5,9 +5,9 @@ using VidBox.Domain.Entities.Users;
 
 namespace VidBox.DataAccess.Interfaces.Users
 {
-    public interface IUserRepository : IRepository<User,UserViewModel>,IGetAll<UserViewModel>
+    public interface IUserRepository : IRepository<User>,IGetAll<UserViewModel>,IGetByPhoneNumber<User?>,
+        ISearchable<UserViewModel>
     {
-        public Task<User?> GetByPhoneAsync(string phone);
-        public Task<IList<UserViewModel>> SearchAsync(string search, PaginationParams @params);
+        public Task<UserViewModel?> GetByIdViewAsync(long id);  
     }
 }
