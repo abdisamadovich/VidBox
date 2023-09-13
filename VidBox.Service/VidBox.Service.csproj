@@ -22,4 +22,9 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\Videos\" />
+    <Folder Include="Interfaces\Users\" />
+  </ItemGroup>
+
 </Project>
