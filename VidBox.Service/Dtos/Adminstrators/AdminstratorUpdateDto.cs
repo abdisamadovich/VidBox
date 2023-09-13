@@ -1,6 +1,6 @@
 ﻿namespace VidBox.Service.Dtos.Adminstrators;
 
-public class AdminstratorCreateDto
+public class AdminstratorUpdateDto
 {
     public string Name { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
