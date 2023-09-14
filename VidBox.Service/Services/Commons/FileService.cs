@@ -1,17 +1,48 @@
 ﻿using Microsoft.AspNetCore.Http;
+using VidBox.Service.Common.Helpers;
 using VidBox.Service.Interfaces.Common;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace VidBox.Service.Services.Commons;
 
 public class FileService : IFileService
 {
-    public Task<bool> DeleteVideoAsync(string subpath)
+    private readonly string MEDIA = "media";
+    private readonly string STORAGE = "storage";
+    private readonly string VIDEOS = "videos";
+
+    private readonly string ROOTPATH;
+
+    public FileService(IWebHostEnvironment env) 
     {
-        throw new NotImplementedException();
+        ROOTPATH = env.WebRootPath;
+    }
+    public async Task<bool> DeleteVideoAsync(string subpath)
+    {
+        if (subpath == "") return true;
+        string path = Path.Combine(ROOTPATH, subpath);
+        if (File.Exists(path))
+        {
+            await Task.Run(() =>
+            {
+                File.Delete(path);
+            });
+            return true;
+        }
+        else return false;
     }
 
-    public Task<string> UploadVideoAsync(IFormFile image)
+    public async Task<string> UploadVideoAsync(IFormFile video, string folderName)
     {
-        throw new NotImplementedException();
+        string newVideoName = MediaHelper.MakeVideoName(video.FileName);
+        string subpath = Path.Combine(STORAGE,VIDEOS , folderName, newVideoName);
+        string path = Path.Combine(ROOTPATH, subpath);
+
+        var stream = new FileStream(path, FileMode.Create);
+        await video.CopyToAsync(stream);
+        stream.Close();
+
+        return subpath;
     }
 }

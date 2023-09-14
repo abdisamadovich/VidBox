@@ -1,6 +1,7 @@
 ﻿using VidBox.DataAccess.Interfaces.Categories;
 using VidBox.DataAccess.Interfaces.Users;
 using VidBox.DataAccess.Repositories.Categories;
+using VidBox.DataAccess.Repositories.Users;
 
 namespace VidBox.WebApi.Configurations.Layers;
 

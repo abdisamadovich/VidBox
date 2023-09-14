@@ -40,4 +40,27 @@ public class TokenService : ITokenService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+    public string GenerateToken(Domain.Entities.Adminstrators.Adminstrator admin)
+    {
+        var identityClaims = new Claim[]
+        {
+            new Claim("Id", admin.Id.ToString()),
+            new Claim("Name", admin.Name),
+            new Claim(ClaimTypes.MobilePhone, admin.PhoneNumber),
+            new Claim(ClaimTypes.Role, "Admin")
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKey"]!));
+        var keyCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        int expiresHours = int.Parse(_config["Lifetime"]!);
+        var token = new JwtSecurityToken(
+            issuer: _config["Issuer"],
+            audience: _config["Audience"],
+            claims: identityClaims,
+            expires: TimeHelper.GetDateTime().AddHours(expiresHours),
+            signingCredentials: keyCredentials);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
 }

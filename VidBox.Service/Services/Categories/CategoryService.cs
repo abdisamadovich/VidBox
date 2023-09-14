@@ -20,8 +20,6 @@ namespace VidBox.Service.Services.Categories
             this._paginator = paginator;
         }
 
-        public async Task<long> CountAsync() => await _repository.CountAsync();
-
         public async Task<bool> CreateAsync(CategoryCreateDto dto)
         {
             Category category = new Category()
