@@ -32,5 +32,6 @@ public static class ServiceLayerConfiguration
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAdminAuthService, AdminAuthService>();
         builder.Services.AddScoped<IVideoService, VideoService>();
+
     }
 }
