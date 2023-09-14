@@ -2,7 +2,7 @@
 
 namespace VidBox.Domain.Entities.Adminstrators
 {
-    public class Adminstrator
+    public class Adminstrator : Auditable
     {
         [MaxLength(30)]
         public string Name { get; set; } = string.Empty;
