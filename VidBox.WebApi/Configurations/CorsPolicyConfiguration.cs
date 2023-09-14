@@ -13,7 +13,7 @@
 
                 option.AddPolicy("OnlySite", builder =>
                 {
-                    builder.WithOrigins("https://www.profex.uz")
+                    builder.WithOrigins("https://www.vidbox.uz")
                         .AllowAnyMethod().AllowAnyHeader();
                 });
             });

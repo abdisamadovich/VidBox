@@ -2,27 +2,26 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace VidBox.WebApi.Configurations
+namespace VidBox.WebApi.Configurations;
+
+public static class JwtConfiguration
 {
-    public static class JwtConfiguration
+    public static void ConfigureJwtAuth(this WebApplicationBuilder builder)
     {
-        public static void ConfigureJwtAuth(this WebApplicationBuilder builder)
-        {
-            var config = builder.Configuration.GetSection("Jwt");
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+        var config = builder.Configuration.GetSection("Jwt");
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = config["Issuer"],
-                        ValidateAudience = true,
-                        ValidAudience = config["Audience"],
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["SecurityKey"]!))
-                    };
-                });
-        }
+                    ValidateIssuer = true,
+                    ValidIssuer = config["Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = config["Audience"],
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["SecurityKey"]!))
+                };
+            });
     }
 }

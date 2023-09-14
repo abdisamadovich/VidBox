@@ -1,28 +1,28 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace VidBox.WebApi.Configurations
+namespace VidBox.WebApi.Configurations;
+
+public static class SwaggerAuthConfiguration
 {
-    public static class SwaggerAuthConfiguration
+    public static void ConfigureSwaggerAuth(this WebApplicationBuilder builder)
     {
-        public static void ConfigureSwaggerAuth(this WebApplicationBuilder builder)
+        builder.Services.AddSwaggerGen(options =>
         {
-            builder.Services.AddSwaggerGen(options =>
+            options.SwaggerDoc("v1", new OpenApiInfo
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "VidBox Api",
-                    Version = "v1"
-                });
+                Title = "VidBox Api",
+                Version = "v1"
+            });
 
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Bearer {token}",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Bearer {token}",
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey
+            });
 
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement {
             {
                 new OpenApiSecurityScheme
                 {
@@ -34,7 +34,6 @@ namespace VidBox.WebApi.Configurations
                 },
                 new string[] { }
             }});
-            });
-        }
+        });
     }
 }

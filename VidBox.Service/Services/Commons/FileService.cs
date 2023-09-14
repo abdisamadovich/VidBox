@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using VidBox.Service.Common.Helpers;
 using VidBox.Service.Interfaces.Common;
 using static System.Net.Mime.MediaTypeNames;

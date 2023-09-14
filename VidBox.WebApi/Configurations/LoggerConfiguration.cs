@@ -1,15 +1,14 @@
 ﻿using Serilog;
 
-namespace VidBox.WebApi.Configurations
+namespace VidBox.WebApi.Configurations;
+
+public static class LoggerConfiguration
 {
-    public static class LoggerConfiguration
+    public static void ConfigureLogger(this WebApplicationBuilder builder)
     {
-        public static void ConfigureLogger(this WebApplicationBuilder builder)
+        builder.Host.UseSerilog((context, configuration) =>
         {
-            builder.Host.UseSerilog((context, configuration) =>
-            {
-                configuration.ReadFrom.Configuration(context.Configuration);
-            });
-        }
+            configuration.ReadFrom.Configuration(context.Configuration);
+        });
     }
 }
