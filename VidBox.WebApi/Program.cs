@@ -1,11 +1,9 @@
-using Microsoft.AspNetCore.Diagnostics;
 using VidBox.DataAccess.Interfaces.Categories;
-using VidBox.DataAccess.Interfaces.Users;
 using VidBox.DataAccess.Repositories.Categories;
 using VidBox.Service.Interfaces.Categories;
 using VidBox.Service.Interfaces.Common;
 using VidBox.Service.Services.Categories;
-using VidBox.Service.Services.Categories.Layers;
+using VidBox.Service.Services.Commons;
 using VidBox.WebApi.Middlewares;
 using ExceptionHandlerMiddleware = Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware;
 
@@ -23,7 +21,7 @@ builder.Services.AddMemoryCache();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IPaginator,Paginator>();    
+builder.Services.AddScoped<IPaginator, Paginator>();
 
 
 var app = builder.Build();
