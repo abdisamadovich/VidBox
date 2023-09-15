@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Adminstrator\Categories\" />
     <Folder Include="Controllers\Adminstrator\Users\" />
     <Folder Include="Controllers\Adminstrator\Videos\" />
     <Folder Include="Controllers\Users\Videos\" />
