@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Org.BouncyCastle.Crypto;
 using VidBox.DataAccess.Interfaces.Categories;
+using VidBox.DataAccess.Interfaces.Videos;
 using VidBox.DataAccess.Repositories.Categories;
 using VidBox.DataAccess.Repositories.Videos;
 using VidBox.DataAccess.Utils;
@@ -18,11 +19,11 @@ namespace VidBox.Service.Services.Videos;
 public class VideoService : IVideoService
 {
     private readonly IFileService _fileService;
-    private readonly VideoRepository _videoRepository;
+    private readonly IVideoRepository _videoRepository;
     private readonly IPaginator _paginator;
     private readonly IMapper _mapper;
 
-    public VideoService(VideoRepository videoRepository,
+    public VideoService(IVideoRepository videoRepository,
         IFileService fileService,
         IPaginator paginator,
         IMapper mapper)

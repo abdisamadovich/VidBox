@@ -48,7 +48,7 @@ namespace VidBox.Service.Services.Categories
         {
             var categories = await _repository.GetAllAsync(@params);
             var count = await _repository.CountAsync();
-            _paginator.Paginate(count, @params);
+            _paginator.Paginate(count, @params);    
 
             return categories;
         }
