@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Adminstrator\Users\" />
     <Folder Include="Controllers\Adminstrator\Videos\" />
     <Folder Include="Controllers\Users\Videos\" />
     <Folder Include="wwwroot\Videos\" />
