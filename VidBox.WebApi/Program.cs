@@ -1,4 +1,3 @@
-using VidBox.WebApi.Configurations;
 using VidBox.WebApi.Configurations.Layers;
 using VidBox.WebApi.Middlewares;
 
@@ -13,6 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
 builder.ConfiguraWeb();
+builder.ConfigureServiceLayer();
+builder.ConfigureDataAccess();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -24,8 +25,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseStaticFiles();
-app.UseMiddleware<CrosOriginAccessMiddleware>();
-app.UseMiddleware<ExceptionHandlerMiddleware>();
+//app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

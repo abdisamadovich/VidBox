@@ -1,4 +1,6 @@
-﻿using Npgsql;
+﻿using Dapper;
+using Npgsql;
+using VidBox.DataAccess.Handlers;
 
 namespace VidBox.DataAccess.Repositories
 {
@@ -7,8 +9,9 @@ namespace VidBox.DataAccess.Repositories
         protected readonly NpgsqlConnection _connection;
         public BaseRepository()
         {
+            SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-            this._connection = new NpgsqlConnection("Host=localhost; Port=5432; Database=VidBox-db; User=postgres; Password=0693;");
+            this._connection = new NpgsqlConnection("Host=localhost; Port=5432; Database=VidBox-db; User Id=postgres; Password=0693;");
         }
     }
 }
