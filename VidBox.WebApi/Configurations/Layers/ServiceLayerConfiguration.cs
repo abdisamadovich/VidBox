@@ -6,6 +6,7 @@ using VidBox.Service.Interfaces.Common;
 using VidBox.Service.Interfaces.Identity;
 using VidBox.Service.Interfaces.Users;
 using VidBox.Service.Interfaces.Videos;
+using VidBox.Service.Services;
 using VidBox.Service.Services.Adminstrator;
 using VidBox.Service.Services.Auth;
 using VidBox.Service.Services.Categories;
@@ -31,6 +32,7 @@ public static class ServiceLayerConfiguration
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAdminAuthService, AdminAuthService>();
     //    builder.Services.AddScoped<IVideoService, VideoService>();
+        builder.Services.AddScoped<IStorageService, StorageService>();
 
     }
 }
