@@ -1,6 +1,8 @@
 ﻿using Dapper;
+using VidBox.DataAccess.Interfaces;
 using VidBox.DataAccess.Interfaces.Adminstrators;
 using VidBox.DataAccess.ViewModels.Adminstrator;
+using VidBox.DataAccess.ViewModels.Users;
 using VidBox.Domain.Entities.Adminstrators;
 
 namespace VidBox.DataAccess.Repositories.Adminstrators;
