@@ -7,8 +7,9 @@ public class RegisterValidator : AbstractValidator<RegisterDto>
 {
     public RegisterValidator()
     {
-        RuleFor(dto => dto.Name).NotNull().NotEmpty().WithMessage("Firstname is required!")
-            .MaximumLength(30).WithMessage("Firstname must be less than 30 characters");
+        RuleFor(dto => dto.Name).NotNull().NotEmpty().WithMessage("Name is required!")
+            .MaximumLength(30).WithMessage("Name must be less than 30 characters")
+            .MinimumLength(3).WithMessage("Name must be more than 3 characters");
 
         RuleFor(dto => dto.PhoneNumber).Must(phone => PhoneNumberValidator.IsValid(phone))
             .WithMessage("Phone number is invalid! ex: +998xxYYYAABB");

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using System.Numerics;
 using VidBox.DataAccess.Common.Interfaces;
+using VidBox.DataAccess.Interfaces;
 using VidBox.DataAccess.Interfaces.Users;
 using VidBox.DataAccess.Utils;
 using VidBox.DataAccess.ViewModels.Users;
@@ -38,7 +39,7 @@ public class UserRepository : BaseRepository, IUserRepository
 
             string query = "INSERT INTO public.users(name, phone_number, phone_number_confirmed, password_hash, salt, " +
                 "created_at, updated_at) VALUES (@Name, @PhoneNumber, @PhoneNumberConfirmed, @PasswordHash, @Salt, " +
-                    "@CreatedAt, UpdatedAt);";
+                    "@CreatedAt, @UpdatedAt);";
 
             return await _connection.ExecuteAsync(query, entity);
         }
@@ -95,9 +96,24 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
-    public Task<User?> GetByIdAsync(long id)
+    public async Task<User?> GetByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _connection.OpenAsync();
+            string query = $"SELECT * FROM users WHERE id=@Id";
+            var result = await _connection.QuerySingleAsync<User>(query, new { Id = id });
+
+            return result;
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
     }
 
     public async Task<UserViewModel?> GetByIdViewAsync(long id)
@@ -181,4 +197,5 @@ public class UserRepository : BaseRepository, IUserRepository
             await _connection.CloseAsync();
         }
     }
+
 }
