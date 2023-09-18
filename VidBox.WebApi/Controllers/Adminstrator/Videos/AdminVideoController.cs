@@ -22,7 +22,7 @@ public class AdminVideoController : ControllerBase
             {
                 BucketName = BucketName,
                 UseClientRegion = true
-            };
+            };  
 
             await client.PutBucketAsync(bucketRequest);
         }
