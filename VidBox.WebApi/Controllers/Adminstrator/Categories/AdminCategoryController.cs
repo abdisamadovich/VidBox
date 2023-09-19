@@ -50,5 +50,14 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(long categoryId)
         => Ok(await _categoryService.DeleteAsync(categoryId));
+
+        [HttpGet("allVideo/byCategory")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetVideosByCategory(long categoryId,int page = 1)
+        {
+            var res = await _categoryService.GetVideosByCategory(categoryId, new PaginationParams(page, maxPageSize));
+            
+            return Ok(res);
+        }
     }
 }

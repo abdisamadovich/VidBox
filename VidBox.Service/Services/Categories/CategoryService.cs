@@ -1,11 +1,13 @@
 ﻿using VidBox.DataAccess.Interfaces.Categories;
 using VidBox.DataAccess.Utils;
 using VidBox.Domain.Entities.Categories;
+using VidBox.Domain.Entities.Videos;
 using VidBox.Domain.Exceptions.Categories;
 using VidBox.Service.Common.Helpers;
 using VidBox.Service.Dtos.Categories;
 using VidBox.Service.Interfaces.Categories;
 using VidBox.Service.Interfaces.Common;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace VidBox.Service.Services.Categories
 {
@@ -59,6 +61,13 @@ namespace VidBox.Service.Services.Categories
             if (category is null) throw new CategoryNotFoundException();
 
             return category;
+        }
+
+        public async Task<IList<Video>> GetVideosByCategory(long category, PaginationParams @params)
+        {
+            var videos = await _repository.GetVideosByCategory(category, @params);
+            
+            return videos;
         }
 
         public async Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto dto)

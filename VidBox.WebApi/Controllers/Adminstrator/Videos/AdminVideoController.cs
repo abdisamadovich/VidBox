@@ -34,6 +34,7 @@ public class AdminVideoController : ControllerBase
     }
 
     [HttpGet("{vidoId}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetByIdAsync(long vidoId)
         => Ok(await _videoService.GetByIdAsync(vidoId));
 
@@ -51,5 +52,10 @@ public class AdminVideoController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> SearchAsync([FromQuery] string search)
             => Ok(await _videoService.SearchAsync(search));
+
+    [HttpGet("count")]
+    [AllowAnonymous]
+    public async Task<IActionResult> CountAsync()
+        => Ok(await _videoService.CountAsync());
 
 }
