@@ -8,11 +8,11 @@ using VidBox.Service.Validators.Dtos.Categories;
 
 namespace VidBox.WebApi.Controllers.Adminstrator.Categories
 {
-    [Route("api/admin/categories")]
+    [Route("api/admin/category")]
     [ApiController]
     public class AdminCategoryController : ControllerBase
     {
-        private readonly int maxPageSize = 30;
+        private readonly int maxPageSize = 10;
         private readonly ICategoryService _categoryService;
 
         public AdminCategoryController(ICategoryService categoryService)
