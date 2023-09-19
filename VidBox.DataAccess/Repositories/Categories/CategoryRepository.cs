@@ -2,6 +2,7 @@
 using VidBox.DataAccess.Interfaces.Categories;
 using VidBox.DataAccess.Utils;
 using VidBox.Domain.Entities.Categories;
+using VidBox.Domain.Entities.Videos;
 
 namespace VidBox.DataAccess.Repositories.Categories;
 
@@ -105,6 +106,23 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         {
             await _connection.CloseAsync();
         }
+    }
+
+    public async Task<IList<Video>> GetVideosByCategory(long category, PaginationParams @params)
+    {
+        try
+        {
+            string query = "SELECT * FROM videos WHERE category_id = @Category " +
+                             $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
+
+            var parameters = new { Category = category };
+
+            var posts = await _connection.QueryAsync<Video>(query, parameters);
+
+            return posts.ToList();
+        }
+        catch { return new List<Video>(); }
+        finally { await _connection.CloseAsync(); }
     }
 
     public async Task<int> UpdateAsync(long id, Category entity)
