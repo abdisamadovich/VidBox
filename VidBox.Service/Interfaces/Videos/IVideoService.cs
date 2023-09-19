@@ -9,9 +9,9 @@ public interface IVideoService
     public Task<IList<Video>> GetAllAsync(PaginationParams @params);
     public Task<bool> CreateAsync(VideoCreateDto dto);
     public Task<bool> UpdateAsync(long videoId, VideoUpdateDto dto);
-    public Task<bool> DeleteAsync(long videoId);
+    public Task<bool> DeleteAsync(long Id);
     public Task<long> CountAsync();
     public Task<IList<Video>> SearchAsync(string search);
     public Task<Video?> GetByIdAsync(long id);
-
+    public Task<Video> GetAllCategoryId(long categoryId);
 }

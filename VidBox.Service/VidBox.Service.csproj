@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\Videos\**" />
-    <EmbeddedResource Remove="Services\Videos\**" />
-    <None Remove="Services\Videos\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\VidBox.DataAccess\VidBox.DataAccess.csproj" />
   </ItemGroup>
 <ItemGroup>
@@ -36,6 +30,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog" Version="3.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\NewFolder\" />
   </ItemGroup>
 
 </Project>

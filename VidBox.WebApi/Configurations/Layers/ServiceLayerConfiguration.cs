@@ -14,6 +14,7 @@ using VidBox.Service.Services.Commons;
 using VidBox.Service.Services.Identity;
 using VidBox.Service.Services.Notification;
 using VidBox.Service.Services.Users;
+using VidBox.Service.Services.Videos;
 
 namespace VidBox.WebApi.Configurations.Layers;
 
@@ -31,7 +32,7 @@ public static class ServiceLayerConfiguration
         builder.Services.AddScoped<IIdentityService, IdentityService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAdminAuthService, AdminAuthService>();
-    //    builder.Services.AddScoped<IVideoService, VideoService>();
+        builder.Services.AddScoped<IVideoService, VideoService>();
         builder.Services.AddScoped<IStorageService, StorageService>();
 
     }

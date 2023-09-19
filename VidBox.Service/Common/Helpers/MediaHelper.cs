@@ -7,6 +7,7 @@ public class MediaHelper
         FileInfo fileInfo = new FileInfo(filename);
         string extension = fileInfo.Extension;
         string name = "VID_" + Guid.NewGuid() + extension;
+
         return name;
     }
 

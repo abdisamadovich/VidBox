@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using Org.BouncyCastle.Crypto;
-using VidBox.DataAccess.Interfaces.Categories;
 using VidBox.DataAccess.Interfaces.Videos;
-using VidBox.DataAccess.Repositories.Categories;
-using VidBox.DataAccess.Repositories.Videos;
 using VidBox.DataAccess.Utils;
-using VidBox.Domain.Entities.Categories;
 using VidBox.Domain.Entities.Videos;
 using VidBox.Domain.Exceptions.Categories;
 using VidBox.Domain.Exceptions.Videos;
@@ -75,10 +70,16 @@ public class VideoService : IVideoService
         return video;
     }
 
+    public Task<Video> GetAllCategoryId(long categoryId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Video?> GetByIdAsync(long id)
     {
         var video = await _videoRepository.GetByIdAsync(id);
-        if(video is null) throw new CategoryNotFoundException();
+        if (video is null) throw new CategoryNotFoundException();
+
         return video;
     }
 
@@ -95,7 +96,7 @@ public class VideoService : IVideoService
         if (video is null) throw new CategoryNotFoundException();
         video.CategoryId = dto.CategoryId;
         video.Name = dto.Name;
-        video.Description = dto.Description;    
+        video.Description = dto.Description;
 
         video.UpdatedAt = TimeHelper.GetDateTime();
         var dbResult = await _videoRepository.UpdateAsync(videoId, video);
