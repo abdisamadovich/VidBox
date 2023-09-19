@@ -139,8 +139,8 @@ public class VideoRepository : BaseRepository, IVideoRepository
         try
         {
             await _connection.OpenAsync();
-            string query = "UPDATE public.videos SET category_id=@CategoryId, name=@Name, description=@Description, " +
-                "video_path=@VideoPath, updated_at=@UpdatedAt WHERE id = {id};";
+            string query = $"UPDATE public.videos SET category_id=@CategoryId, name=@Name, description=@Description, " +
+                $"video_path=@VideoPath, updated_at=@UpdatedAt WHERE id = {id};";
             var res = await _connection.ExecuteAsync(query, entity);
 
             return res;
