@@ -16,17 +16,16 @@ public class VideoService : IVideoService
     private readonly IFileService _fileService;
     private readonly IVideoRepository _videoRepository;
     private readonly IPaginator _paginator;
-    private readonly IMapper _mapper;
+  
 
     public VideoService(IVideoRepository videoRepository,
         IFileService fileService,
-        IPaginator paginator,
-        IMapper mapper)
+        IPaginator paginator
+        )
     {
         this._fileService = fileService;
         this._videoRepository = videoRepository;
         this._paginator = paginator;
-        _mapper = mapper;
     }
     public Task<long> CountAsync()
     {
@@ -36,8 +35,9 @@ public class VideoService : IVideoService
 
     public async Task<bool> CreateAsync(VideoCreateDto dto)
     {
-        string videoPath = await _fileService.UploadVideoAsync(dto.VideoPath, "videos");
-        Video video = _mapper.Map<Video>(dto);
+        string videoPath = await _fileService.UploadVideoAsync(dto.VideoPath);
+        //Video video = _mapper.Map<Video>(dto);
+        Video video = new Video();
         video.CategoryId = dto.CategoryId;
         video.Name = dto.Name;
         video.Description = dto.Description;

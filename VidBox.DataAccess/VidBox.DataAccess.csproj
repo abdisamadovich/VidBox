@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Repositories\Videos\**" />
-    <EmbeddedResource Remove="Repositories\Videos\**" />
-    <None Remove="Repositories\Videos\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\VidBox.Domain\VidBox.Domain.csproj" />
   </ItemGroup>
 
