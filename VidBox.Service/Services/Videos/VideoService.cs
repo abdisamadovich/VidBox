@@ -78,7 +78,7 @@ public class VideoService : IVideoService
     public async Task<Video?> GetByIdAsync(long id)
     {
         var video = await _videoRepository.GetByIdAsync(id);
-        if (video is null) throw new CategoryNotFoundException();
+        if (video is null) throw new VideoNotFoundException();
 
         return video;
     }
@@ -93,7 +93,7 @@ public class VideoService : IVideoService
     public async Task<bool> UpdateAsync(long videoId, VideoUpdateDto dto)
     {
         var video = await _videoRepository.GetByIdAsync(videoId);
-        if (video is null) throw new CategoryNotFoundException();
+        if (video is null) throw new VideoNotFoundException();
         video.CategoryId = dto.CategoryId;
         video.Name = dto.Name;
         video.Description = dto.Description;
