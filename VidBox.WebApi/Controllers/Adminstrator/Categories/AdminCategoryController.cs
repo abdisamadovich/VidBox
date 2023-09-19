@@ -34,9 +34,9 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _categoryService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(long id)
-            => Ok(await _categoryService.GetByIdAsync(id));
+        [HttpGet("{categoryId}")]
+        public async Task<IActionResult> GetByIdAsync(long categoryId)
+            => Ok(await _categoryService.GetByIdAsync(categoryId));
 
         [HttpPut("{categoryId}")]
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
