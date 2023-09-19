@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Users\Videos\" />
+    <Folder Include="wwwroot\media\videos\" />
     <Folder Include="wwwroot\Videos\" />
   </ItemGroup>
 

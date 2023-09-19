@@ -10,7 +10,7 @@ namespace VidBox.Service.Services.Commons;
 public class FileService : IFileService
 {
     private readonly string MEDIA = "media";
-    private readonly string STORAGE = "storage";
+    //private readonly string STORAGE = "storage";
     private readonly string VIDEOS = "videos";
 
     private readonly string ROOTPATH;
@@ -34,10 +34,10 @@ public class FileService : IFileService
         else return false;
     }
 
-    public async Task<string> UploadVideoAsync(IFormFile video, string folderName)
+    public async Task<string> UploadVideoAsync(IFormFile video)
     {
         string newVideoName = MediaHelper.MakeVideoName(video.FileName);
-        string subpath = Path.Combine(STORAGE,VIDEOS , folderName, newVideoName);
+        string subpath = Path.Combine(MEDIA, VIDEOS, newVideoName); 
         string path = Path.Combine(ROOTPATH, subpath);
 
         var stream = new FileStream(path, FileMode.Create);
