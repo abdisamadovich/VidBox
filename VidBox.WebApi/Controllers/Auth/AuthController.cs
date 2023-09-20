@@ -51,7 +51,7 @@ namespace VidBox.WebApi.Controllers.Auth
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
 
-        /*[HttpPost("login")]
+        [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
         {
@@ -61,9 +61,9 @@ namespace VidBox.WebApi.Controllers.Auth
 
             var serviceResult = await _authService.LoginAsync(loginDto);
             return Ok(new { serviceResult.Result, serviceResult.Token });
-        }*/
+        }
 
-        [HttpPost("login")]
+        /*[HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
         {
@@ -87,7 +87,7 @@ namespace VidBox.WebApi.Controllers.Auth
                         if (wifiIpAddress != null)
                         {
                             // Foydalanuvchi IP manzili "10.10.3.241" ga teng bo'lmasa, kirishni rad etamiz
-                            if (wifiIpAddress.Address.ToString() != "192.168.100.47")
+                            if (wifiIpAddress.Address.ToString() != "10.10.3.241")
                             {
                                 return Unauthorized(); // 401 Unauthorized status kodni qaytarish
                             }
@@ -100,8 +100,8 @@ namespace VidBox.WebApi.Controllers.Auth
                     }
                 }
             }
-                return Ok();
-        }
+            return Ok();
+        }*/
 
         [HttpPost("reset/send-code")]
         public async Task<IActionResult> SentCodeResetPasswordAsync(string phone)
