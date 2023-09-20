@@ -87,7 +87,7 @@ namespace VidBox.WebApi.Controllers.Auth
                         if (wifiIpAddress != null)
                         {
                             // Foydalanuvchi IP manzili "10.10.3.241" ga teng bo'lmasa, kirishni rad etamiz
-                            if (wifiIpAddress.Address.ToString() != "172.20.10.11")
+                            if (wifiIpAddress.Address.ToString() != "192.168.100.47")
                             {
                                 return Unauthorized(); // 401 Unauthorized status kodni qaytarish
                             }
