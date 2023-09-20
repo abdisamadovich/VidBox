@@ -61,5 +61,28 @@ namespace VidBox.WebApi.Controllers.Auth
             var serviceResult = await _authService.LoginAsync(loginDto);
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
+
+        /*[HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
+        {
+            var validator = new LoginValidator();
+            var valResult = validator.Validate(loginDto);
+            if (valResult.IsValid == false) return BadRequest(valResult.Errors);
+
+            // Foydalanuvchi IP manzilini olish
+            string clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+
+            // Foydalanuvchi IP manzili "10.10.3.241" ga teng bo'lmasa, kirishni rad etamiz
+            if (clientIpAddress != "10.10.3.241")
+            {
+                return Unauthorized(); // 401 Unauthorized status kodni qaytarish
+            }
+            else
+            {
+                var serviceResult = await _authService.LoginAsync(loginDto);
+                return Ok(new { serviceResult.Result, serviceResult.Token });
+            }
+        }*/
     }
 }
