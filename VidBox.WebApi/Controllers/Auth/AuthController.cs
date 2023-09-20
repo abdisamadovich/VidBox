@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.NetworkInformation;
 using VidBox.Service.Dtos.Auth;
 using VidBox.Service.Interfaces.Auth;
 using VidBox.Service.Validators;
@@ -50,7 +51,7 @@ namespace VidBox.WebApi.Controllers.Auth
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
 
-        [HttpPost("login")]
+        /*[HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
         {
@@ -60,9 +61,9 @@ namespace VidBox.WebApi.Controllers.Auth
 
             var serviceResult = await _authService.LoginAsync(loginDto);
             return Ok(new { serviceResult.Result, serviceResult.Token });
-        }
+        }*/
 
-        /*[HttpPost("login")]
+        [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
         {
@@ -70,19 +71,43 @@ namespace VidBox.WebApi.Controllers.Auth
             var valResult = validator.Validate(loginDto);
             if (valResult.IsValid == false) return BadRequest(valResult.Errors);
 
-            // Foydalanuvchi IP manzilini olish
-            string clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+          
 
-            // Foydalanuvchi IP manzili "10.10.3.241" ga teng bo'lmasa, kirishni rad etamiz
-            if (clientIpAddress != "10.10.3.241")
+            NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (NetworkInterface netInterface in networkInterfaces)
             {
-                return Unauthorized(); // 401 Unauthorized status kodni qaytarish
+                if (netInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 &&
+                    netInterface.OperationalStatus == OperationalStatus.Up)
+                {
+
+                    if (netInterface != null)
+                    {
+                        UnicastIPAddressInformation wifiIpAddress = netInterface.GetIPProperties()
+                            .UnicastAddresses
+                            .FirstOrDefault(address => address.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
+
+                        if (wifiIpAddress != null)
+                        {
+                            // Foydalanuvchi IP manzili "10.10.3.241" ga teng bo'lmasa, kirishni rad etamiz
+                            if (wifiIpAddress.Address.ToString() != "172.20.10.11")
+                            {
+                                return Unauthorized(); // 401 Unauthorized status kodni qaytarish
+                            }
+                            else
+                            {
+                                var serviceResult = await _authService.LoginAsync(loginDto);
+                                return Ok(new { serviceResult.Result, serviceResult.Token });
+                            }
+                        }
+                    }
+                }
             }
-            else
-            {
-                var serviceResult = await _authService.LoginAsync(loginDto);
-                return Ok(new { serviceResult.Result, serviceResult.Token });
-            }
-        }*/
+                return Ok();
+            // Foydalanuvchi IP manzilini olish
+
+         
+        }
+
     }
 }

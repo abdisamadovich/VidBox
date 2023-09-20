@@ -28,6 +28,7 @@ public class AdminVideoController : ControllerBase
             => Ok(await _videoService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
     [HttpPost]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateAsync([FromForm] VideoCreateDto dto)
     {
         return Ok(await _videoService.CreateAsync(dto));
@@ -39,10 +40,12 @@ public class AdminVideoController : ControllerBase
         => Ok(await _videoService.GetByIdAsync(vidoId));
 
     [HttpDelete("{videoId}")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteAsync(long videoId)
         => Ok(await _videoService.DeleteAsync(videoId));
 
     [HttpPut("{videoId}")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateAsync(long videoId, [FromForm] VideoUpdateDto dto)
     {
         return Ok(await _videoService.UpdateAsync(videoId, dto));
