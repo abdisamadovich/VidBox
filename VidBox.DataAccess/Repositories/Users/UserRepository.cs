@@ -37,9 +37,11 @@ public class UserRepository : BaseRepository, IUserRepository
         {
             await _connection.OpenAsync();
 
-            string query = "INSERT INTO public.users(name, phone_number, phone_number_confirmed, password_hash, salt, " +
-                "created_at, updated_at) VALUES (@Name, @PhoneNumber, @PhoneNumberConfirmed, @PasswordHash, @Salt, " +
-                    "@CreatedAt, @UpdatedAt);";
+            //string query = "INSERT INTO public.users(name, phone_number, phone_number_confirmed, password_hash, salt, " +
+            //  "created_at, updated_at) VALUES (@Name, @PhoneNumber, @PhoneNumberConfirmed, @PasswordHash, @Salt, " +
+            //    "@CreatedAt, @UpdatedAt);";
+            string query = "INSERT INTO public.users(name, phone_number, phone_number_confirmed, password_hash, salt, created_at, updated_at, roles)" +
+                "VALUES (@Name, @PhoneNumber, @PhoneNumberConfirmed, @PasswordHash, @Salt, @CreatedAt, @UpdatedAt, @Roles);";
 
             return await _connection.ExecuteAsync(query, entity);
         }

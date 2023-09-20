@@ -87,7 +87,7 @@ namespace VidBox.WebApi.Controllers.Auth
                         if (wifiIpAddress != null)
                         {
                             // Foydalanuvchi IP manzili "10.10.3.241" ga teng bo'lmasa, kirishni rad etamiz
-                            if (wifiIpAddress.Address.ToString() != "192.168.100.47")
+                            if (wifiIpAddress.Address.ToString() != "10.10.3.241")
                             {
                                 return Unauthorized(); // 401 Unauthorized status kodni qaytarish
                             }
@@ -103,5 +103,22 @@ namespace VidBox.WebApi.Controllers.Auth
                 return Ok();
         }
 
+        [HttpPost("reset/send-code")]
+        public async Task<IActionResult> SentCodeResetPasswordAsync(string phone)
+        {
+            var result = PhoneNumberValidator.IsValid(phone);
+            if (result == false) return BadRequest("Phone number is invalid!");
+            var serviceResult = await _authService.SendCodeForResetPasswordAsync(phone);
+
+            return Ok(new { serviceResult.Result, serviceResult.CachedVerificationMinutes });
+        }
+
+        [HttpPost("reset/verify")]
+        public async Task<IActionResult> VerifyResetPasswordAsync([FromBody] VerifyRegisterDto verifyRegisterDto)
+        {
+            var serviceResult = await _authService.VerifyResetPasswordAsync(verifyRegisterDto.PhoneNumber, verifyRegisterDto.Code);
+
+            return Ok(new { serviceResult.Result, serviceResult.Token });
+        }
     }
 }

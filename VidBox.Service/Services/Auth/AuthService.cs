@@ -93,6 +93,7 @@ public class AuthService : IAuthService
         var hasherResult = PasswordHasher.Hash(registerDto.Password);
         user.PasswordHash = hasherResult.Hash;
         user.Salt = hasherResult.Salt;
+        user.Roles = 0;
         user.CreatedAt = user.UpdatedAt = TimeHelper.GetDateTime();
         var dbResult = await _userRepository.CreateAsync(user);
 

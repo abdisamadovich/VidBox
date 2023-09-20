@@ -21,7 +21,7 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
         {
             var createValidator = new CategoryCreateValidator();
@@ -41,7 +41,7 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
             => Ok(await _categoryService.GetByIdAsync(categoryId));
 
         [HttpPut("{categoryId}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
         {
             var updateValidator = new CategoryUpdateValidator();    
@@ -51,7 +51,7 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
         }
 
         [HttpDelete]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long categoryId)
         => Ok(await _categoryService.DeleteAsync(categoryId));
 
