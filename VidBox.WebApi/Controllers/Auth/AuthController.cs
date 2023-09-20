@@ -71,8 +71,6 @@ namespace VidBox.WebApi.Controllers.Auth
             var valResult = validator.Validate(loginDto);
             if (valResult.IsValid == false) return BadRequest(valResult.Errors);
 
-          
-
             NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
 
             foreach (NetworkInterface netInterface in networkInterfaces)
@@ -80,7 +78,6 @@ namespace VidBox.WebApi.Controllers.Auth
                 if (netInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 &&
                     netInterface.OperationalStatus == OperationalStatus.Up)
                 {
-
                     if (netInterface != null)
                     {
                         UnicastIPAddressInformation wifiIpAddress = netInterface.GetIPProperties()
@@ -104,9 +101,6 @@ namespace VidBox.WebApi.Controllers.Auth
                 }
             }
                 return Ok();
-            // Foydalanuvchi IP manzilini olish
-
-         
         }
 
     }
