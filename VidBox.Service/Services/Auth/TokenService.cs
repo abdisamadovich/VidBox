@@ -25,7 +25,8 @@ public class TokenService : ITokenService
             new Claim("Id", user.Id.ToString()),
             new Claim("Name", user.Name),
             new Claim(ClaimTypes.MobilePhone, user.PhoneNumber),
-            new Claim(ClaimTypes.Role, "User")
+            //new Claim(ClaimTypes.Role, "User")
+            new Claim(ClaimTypes.Role, user.Roles.ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKey"]!));

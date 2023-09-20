@@ -24,7 +24,7 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Users
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
@@ -37,17 +37,17 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Users
         }*/
 
         [HttpGet("count")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CountAsync()
              => Ok(await _userService.CountAsync());
 
         [HttpDelete("{userId}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long userId)
         => Ok(await _userService.DeleteAsync(userId));
 
         [HttpGet("search")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> SearchAsync([FromQuery] string search)
         => Ok(await _userService.SearchAsync(search));
     }
