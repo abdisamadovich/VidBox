@@ -22,6 +22,7 @@ public class UserCategoryController : ControllerBase
         => Ok(await _categoryService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
     [HttpGet("{categoryId}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetByIdAsync(long categoryId)
             => Ok(await _categoryService.GetByIdAsync(categoryId));
 
