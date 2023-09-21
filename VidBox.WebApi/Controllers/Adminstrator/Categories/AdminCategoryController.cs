@@ -35,31 +35,31 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _categoryService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-        [HttpGet("{categoryId}")]
+        [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByIdAsync(long categoryId)
-            => Ok(await _categoryService.GetByIdAsync(categoryId));
+        public async Task<IActionResult> GetByIdAsync(long id)
+            => Ok(await _categoryService.GetByIdAsync(id));
 
-        [HttpPut("{categoryId}")]
+        [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
+        public async Task<IActionResult> UpdateAsync(long id, [FromForm] CategoryUpdateDto dto)
         {
             var updateValidator = new CategoryUpdateValidator();    
             var validationResult = updateValidator.Validate(dto);
-            if (validationResult.IsValid) return Ok(await _categoryService.UpdateAsync(categoryId, dto));
+            if (validationResult.IsValid) return Ok(await _categoryService.UpdateAsync(id, dto));
             else return BadRequest(validationResult.Errors);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteAsync(long categoryId)
-        => Ok(await _categoryService.DeleteAsync(categoryId));
+        public async Task<IActionResult> DeleteAsync(long id)
+        => Ok(await _categoryService.DeleteAsync(id));
 
-        [HttpGet("allVideo/byCategory")]
+        [HttpGet("{id}/allVideo")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetVideosByCategory(long categoryId,int page = 1)
+        public async Task<IActionResult> GetVideosByCategory(long id, int page = 1)
         {
-            var res = await _categoryService.GetVideosByCategory(categoryId, new PaginationParams(page, maxPageSize));
+            var res = await _categoryService.GetVideosByCategory(id, new PaginationParams(page, maxPageSize));
             
             return Ok(res);
         }

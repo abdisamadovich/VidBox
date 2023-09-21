@@ -34,21 +34,21 @@ public class AdminVideoController : ControllerBase
         return Ok(await _videoService.CreateAsync(dto));
     }
 
-    [HttpGet("{vidoId}")]
+    [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetByIdAsync(long vidoId)
-        => Ok(await _videoService.GetByIdAsync(vidoId));
+    public async Task<IActionResult> GetByIdAsync(long id)
+        => Ok(await _videoService.GetByIdAsync(id));
 
-    [HttpDelete("{videoId}")]
+    [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeleteAsync(long videoId)
-        => Ok(await _videoService.DeleteAsync(videoId));
+    public async Task<IActionResult> DeleteAsync(long id)
+        => Ok(await _videoService.DeleteAsync(id));
 
-    [HttpPut("{videoId}")]
+    [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateAsync(long videoId, [FromForm] VideoUpdateDto dto)
-    {
-        return Ok(await _videoService.UpdateAsync(videoId, dto));
+    public async Task<IActionResult> UpdateAsync(long id, [FromForm] VideoUpdateDto dto)
+    {   
+        return Ok(await _videoService.UpdateAsync(id, dto));
     }
 
     [HttpGet("search")]

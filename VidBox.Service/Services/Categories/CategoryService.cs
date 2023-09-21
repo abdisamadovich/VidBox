@@ -66,8 +66,8 @@ namespace VidBox.Service.Services.Categories
         public async Task<IList<Video>> GetVideosByCategory(long category, PaginationParams @params)
         {
             var videos = await _repository.GetVideosByCategory(category, @params);
-            
-            return videos;
+            //if (category is null) throw new CategoryNotFoundException();
+            return videos;  
         }
 
         public async Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto dto)
