@@ -21,16 +21,16 @@ public class UserCategoryController : ControllerBase
     public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _categoryService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-    [HttpGet("{categoryId}")]
+    [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetByIdAsync(long categoryId)
-            => Ok(await _categoryService.GetByIdAsync(categoryId));
+    public async Task<IActionResult> GetByIdAsync(long id)
+            => Ok(await _categoryService.GetByIdAsync(id));
 
-    [HttpGet("allVideo/byCategory")]
+    [HttpGet("{id}/allVideo")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetVideosByCategory(long categoryId, int page = 1)
+    public async Task<IActionResult> GetVideosByCategory(long id, int page = 1)
     {
-        var res = await _categoryService.GetVideosByCategory(categoryId, new PaginationParams(page, maxPageSize));
+        var res = await _categoryService.GetVideosByCategory(id, new PaginationParams(page, maxPageSize));
 
         return Ok(res);
     }

@@ -27,10 +27,10 @@ public class UserVideoController : ControllerBase
     public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _videoService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-    [HttpGet("{vidoId}")]
+    [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetByIdAsync(long vidoId)
-    => Ok(await _videoService.GetByIdAsync(vidoId));
+    public async Task<IActionResult> GetByIdAsync(long id)
+    => Ok(await _videoService.GetByIdAsync(id));
 
     [HttpGet("search")]
     [AllowAnonymous]

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using VidBox.DataAccess.Interfaces.Categories;
 using VidBox.DataAccess.Interfaces.Videos;
 using VidBox.DataAccess.Utils;
+using VidBox.Domain.Entities.Categories;
 using VidBox.Domain.Entities.Videos;
 using VidBox.Domain.Exceptions.Categories;
 using VidBox.Domain.Exceptions.Videos;
@@ -16,16 +18,19 @@ public class VideoService : IVideoService
     private readonly IFileService _fileService;
     private readonly IVideoRepository _videoRepository;
     private readonly IPaginator _paginator;
+    private readonly ICategoryRepository _cateoryRepository;
   
 
     public VideoService(IVideoRepository videoRepository,
         IFileService fileService,
-        IPaginator paginator
+        IPaginator paginator,
+        ICategoryRepository category
         )
     {
         this._fileService = fileService;
         this._videoRepository = videoRepository;
         this._paginator = paginator;
+        _cateoryRepository = category;
     }
     public Task<long> CountAsync()
     {
@@ -38,6 +43,8 @@ public class VideoService : IVideoService
         string videoPath = await _fileService.UploadVideoAsync(dto.VideoPath);
         //Video video = _mapper.Map<Video>(dto);
         Video video = new Video();
+        var category = await _cateoryRepository.GetByIdAsync(dto.CategoryId);
+        if (category == null) throw new CategoryNotFoundException();
         video.CategoryId = dto.CategoryId;
         video.Name = dto.Name;
         video.Description = dto.Description;
@@ -52,7 +59,7 @@ public class VideoService : IVideoService
     public async Task<bool> DeleteAsync(long videoId)
     {
         var video = await _videoRepository.GetByIdAsync(videoId);
-        if (video is null) throw new CategoryNotFoundException();
+        if (video is null) throw new VideoNotFoundException();
 
         var result = await _fileService.DeleteVideoAsync(video.VideoPath);
         if (result == false) throw new VideoNotFoundException();
@@ -94,6 +101,9 @@ public class VideoService : IVideoService
     {
         var video = await _videoRepository.GetByIdAsync(videoId);
         if (video is null) throw new VideoNotFoundException();
+        var category=await _cateoryRepository.GetByIdAsync(dto.CategoryId);
+        if (category == null) throw new CategoryNotFoundException();
+        
         video.CategoryId = dto.CategoryId;
         video.Name = dto.Name;
         video.Description = dto.Description;
