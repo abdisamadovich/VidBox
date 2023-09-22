@@ -7,7 +7,7 @@ using VidBox.Service.Interfaces.Videos;
 
 namespace VidBox.WebApi.Controllers.Adminstrator.Videos;
 
-[Route("api/admin/video")]
+[Route("api/admin/videos")]
 [ApiController]
 public class AdminVideoController : ControllerBase
 {
@@ -34,21 +34,21 @@ public class AdminVideoController : ControllerBase
         return Ok(await _videoService.CreateAsync(dto));
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{videoId}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetByIdAsync(long id)
-        => Ok(await _videoService.GetByIdAsync(id));
+    public async Task<IActionResult> GetByIdAsync(long videoId)
+        => Ok(await _videoService.GetByIdAsync(videoId));
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{videoId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeleteAsync(long id)
-        => Ok(await _videoService.DeleteAsync(id));
+    public async Task<IActionResult> DeleteAsync(long videoId)
+        => Ok(await _videoService.DeleteAsync(videoId));
 
-    [HttpPut("{id}")]
+    [HttpPut("{videoId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateAsync(long id, [FromForm] VideoUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(long videoId, [FromForm] VideoUpdateDto dto)
     {   
-        return Ok(await _videoService.UpdateAsync(id, dto));
+        return Ok(await _videoService.UpdateAsync(videoId, dto));
     }
 
     [HttpGet("search")]
