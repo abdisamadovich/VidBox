@@ -11,7 +11,7 @@ using VidBox.Service.Validators.Dtos.Users;
 
 namespace VidBox.WebApi.Controllers.Adminstrator.Users
 {
-    [Route("api/admin/user")]
+    [Route("api/admin/users")]
     [ApiController]
     public class AdminUserController : ControllerBase
     {
@@ -41,10 +41,10 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Users
         public async Task<IActionResult> CountAsync()
              => Ok(await _userService.CountAsync());
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{userId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteAsync(long id)
-        => Ok(await _userService.DeleteAsync(id));
+        public async Task<IActionResult> DeleteAsync(long userId)
+        => Ok(await _userService.DeleteAsync(userId));
 
         [HttpGet("search")]
         [Authorize(Roles = "Admin")]

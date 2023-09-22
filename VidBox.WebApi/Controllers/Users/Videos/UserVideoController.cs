@@ -6,7 +6,7 @@ using VidBox.Service.Interfaces.Videos;
 
 namespace VidBox.WebApi.Controllers.Users.Videos;
 
-[Route("api/user/video")]
+[Route("api/user/videos")]
 [ApiController]
 public class UserVideoController : ControllerBase
 {
@@ -27,10 +27,10 @@ public class UserVideoController : ControllerBase
     public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _videoService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-    [HttpGet("{id}")]
+    [HttpGet("{videoId}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetByIdAsync(long id)
-    => Ok(await _videoService.GetByIdAsync(id));
+    public async Task<IActionResult> GetByIdAsync(long videoId)
+    => Ok(await _videoService.GetByIdAsync(videoId));
 
     [HttpGet("search")]
     [AllowAnonymous]
