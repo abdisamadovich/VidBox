@@ -51,7 +51,7 @@ namespace VidBox.WebApi.Controllers.Auth
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
 
-        [HttpPost("login")]
+        /*[HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
         {
@@ -61,9 +61,9 @@ namespace VidBox.WebApi.Controllers.Auth
 
             var serviceResult = await _authService.LoginAsync(loginDto);
             return Ok(new { serviceResult.Result, serviceResult.Token });
-        }
+        }*/
 
-        /*[HttpPost("login")]
+        [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
         {
@@ -102,7 +102,7 @@ namespace VidBox.WebApi.Controllers.Auth
             }
             return Ok();
         }
-*/
+
         [HttpPost("reset/send-code")]
         public async Task<IActionResult> SentCodeResetPasswordAsync(string phone)
         {
