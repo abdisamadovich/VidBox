@@ -29,7 +29,7 @@ public class AdminVideoController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> CreateAsync([FromForm] VideoCreateDto dto)
+    public async Task<IActionResult> CreateAsync([FromBody] VideoCreateDto dto)
     {
         return Ok(await _videoService.CreateAsync(dto));
     }
@@ -46,7 +46,7 @@ public class AdminVideoController : ControllerBase
 
     [HttpPut("{videoId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateAsync(long videoId, [FromForm] VideoUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(long videoId, [FromBody] VideoUpdateDto dto)
     {   
         return Ok(await _videoService.UpdateAsync(videoId, dto));
     }
