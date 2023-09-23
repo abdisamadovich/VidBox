@@ -23,7 +23,7 @@ public class AdminVideoController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _videoService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
@@ -35,7 +35,7 @@ public class AdminVideoController : ControllerBase
     }
 
     [HttpGet("{videoId}")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetByIdAsync(long videoId)
         => Ok(await _videoService.GetByIdAsync(videoId));
 
@@ -52,12 +52,12 @@ public class AdminVideoController : ControllerBase
     }
 
     [HttpGet("search")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> SearchAsync([FromQuery] string search)
             => Ok(await _videoService.SearchAsync(search));
 
     [HttpGet("count")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CountAsync()
         => Ok(await _videoService.CountAsync());
 

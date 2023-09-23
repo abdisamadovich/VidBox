@@ -23,17 +23,18 @@ public class UserVideoController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _videoService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
     [HttpGet("{videoId}")]
-    [AllowAnonymous]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetByIdAsync(long videoId)
     => Ok(await _videoService.GetByIdAsync(videoId));
 
     [HttpGet("search")]
     [AllowAnonymous]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> SearchAsync([FromQuery] string search)
         => Ok(await _videoService.SearchAsync(search));
 }
