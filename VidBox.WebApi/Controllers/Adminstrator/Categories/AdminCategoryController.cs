@@ -22,7 +22,7 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
+        public async Task<IActionResult> CreateAsync([FromBody] CategoryCreateDto dto)
         {
             var createValidator = new CategoryCreateValidator();
             var result = createValidator.Validate(dto);
@@ -42,7 +42,7 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
 
         [HttpPut("{categoryId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
+        public async Task<IActionResult> UpdateAsync(long categoryId, [FromBody] CategoryUpdateDto dto)
         {
             var updateValidator = new CategoryUpdateValidator();    
             var validationResult = updateValidator.Validate(dto);
