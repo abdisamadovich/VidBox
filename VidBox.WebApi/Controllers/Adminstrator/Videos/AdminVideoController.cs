@@ -46,7 +46,7 @@ public class AdminVideoController : ControllerBase
 
     [HttpPut("{videoId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateAsync(long videoId, [FromBody] VideoUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(long videoId, [FromForm] VideoUpdateDto dto)
     {   
         return Ok(await _videoService.UpdateAsync(videoId, dto));
     }
