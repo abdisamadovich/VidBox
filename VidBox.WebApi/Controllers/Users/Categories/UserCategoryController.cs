@@ -17,17 +17,17 @@ public class UserCategoryController : ControllerBase
         this._categoryService = categoryService;
     }
     [HttpGet]
-    [AllowAnonymous]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _categoryService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
     [HttpGet("{categoryId}")]
-    [AllowAnonymous]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetByIdAsync(long categoryId)
             => Ok(await _categoryService.GetByIdAsync(categoryId));
 
     [HttpGet("{categoryId}/videos")]
-    [AllowAnonymous]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetVideosByCategory(long categoryId, int page = 1)
     {
         var res = await _categoryService.GetVideosByCategory(categoryId, new PaginationParams(page, maxPageSize));

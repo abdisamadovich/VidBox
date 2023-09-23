@@ -31,12 +31,12 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _categoryService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{categoryId}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetByIdAsync(long categoryId)
             => Ok(await _categoryService.GetByIdAsync(categoryId));
 
@@ -56,7 +56,7 @@ namespace VidBox.WebApi.Controllers.Adminstrator.Categories
         => Ok(await _categoryService.DeleteAsync(categoryId));
 
         [HttpGet("{categoryId}/videos")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetVideosByCategory(long categoryId, int page = 1)
         {
             var res = await _categoryService.GetVideosByCategory(categoryId, new PaginationParams(page, maxPageSize));
