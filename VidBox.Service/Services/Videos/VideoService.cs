@@ -99,6 +99,7 @@ public class VideoService : IVideoService
 
     public async Task<bool> UpdateAsync(long videoId, VideoUpdateDto dto)
     {
+        string videoPath = await _fileService.UploadVideoAsync(dto.VideoPath);
         var video = await _videoRepository.GetByIdAsync(videoId);
         if (video is null) throw new VideoNotFoundException();
         var category=await _cateoryRepository.GetByIdAsync(dto.CategoryId);
@@ -107,7 +108,7 @@ public class VideoService : IVideoService
         video.CategoryId = dto.CategoryId;
         video.Name = dto.Name;
         video.Description = dto.Description;
-
+        video.VideoPath = videoPath;
         video.UpdatedAt = TimeHelper.GetDateTime();
         var dbResult = await _videoRepository.UpdateAsync(videoId, video);
 

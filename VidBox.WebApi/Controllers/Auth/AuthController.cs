@@ -61,33 +61,8 @@ namespace VidBox.WebApi.Controllers.Auth
             var valResult = validator.Validate(loginDto);
             if (valResult.IsValid == false) return BadRequest(valResult.Errors);
 
-            // Mijozning IP manzilini olish
-            string hostName = Dns.GetHostName();
-            IPHostEntry hostEntry = Dns.GetHostEntry(hostName);
-            IPAddress[] ipAddresses = hostEntry.AddressList;
-
-            
-            foreach (IPAddress ipAddress in ipAddresses)
-            {
-                if (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    islom = ipAddress.ToString();
-                    Console.WriteLine("Mijozning IPv4 manzili: " + ipAddress.ToString());
-                    await Console.Out.WriteLineAsync("Men quygan ipaddress : 172.20.10.11");
-                    break;
-                }
-            }
-            await Console.Out.WriteLineAsync(islom);
-
-            if (islom == "172.20.10.11")
-            {
-                var serviceResult = await _authService.LoginAsync(loginDto);
-                return Ok(new { serviceResult.Result, serviceResult.Token });
-            }
-            else
-            {
-                return BadRequest(valResult.Errors.ToString());
-            }
+            var serviceResult = await _authService.LoginAsync(loginDto);
+            return Ok(new { serviceResult.Result, serviceResult.Token });
         }
 
         [HttpPost("reset/send-code")]
