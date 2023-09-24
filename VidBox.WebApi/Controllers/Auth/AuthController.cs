@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Net.NetworkInformation;
 using VidBox.Service.Dtos.Auth;
 using VidBox.Service.Interfaces.Auth;
@@ -51,18 +52,7 @@ namespace VidBox.WebApi.Controllers.Auth
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
 
-        /*[HttpPost("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
-        {
-            var validator = new LoginValidator();
-            var valResult = validator.Validate(loginDto);
-            if (valResult.IsValid == false) return BadRequest(valResult.Errors);
-
-            var serviceResult = await _authService.LoginAsync(loginDto);
-            return Ok(new { serviceResult.Result, serviceResult.Token });
-        }*/
-
+        string islom;
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
@@ -71,36 +61,33 @@ namespace VidBox.WebApi.Controllers.Auth
             var valResult = validator.Validate(loginDto);
             if (valResult.IsValid == false) return BadRequest(valResult.Errors);
 
-            NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            // Mijozning IP manzilini olish
+            string hostName = Dns.GetHostName();
+            IPHostEntry hostEntry = Dns.GetHostEntry(hostName);
+            IPAddress[] ipAddresses = hostEntry.AddressList;
 
-            foreach (NetworkInterface netInterface in networkInterfaces)
+            
+            foreach (IPAddress ipAddress in ipAddresses)
             {
-                if (netInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 &&
-                    netInterface.OperationalStatus == OperationalStatus.Up)
+                if (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                 {
-                    if (netInterface != null)
-                    {
-                        UnicastIPAddressInformation wifiIpAddress = netInterface.GetIPProperties()
-                            .UnicastAddresses
-                            .FirstOrDefault(address => address.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
-
-                        if (wifiIpAddress != null)
-                        {
-                            // Foydalanuvchi IP manzili "10.10.3.241" ga teng bo'lmasa, kirishni rad etamiz
-                            if (wifiIpAddress.Address.ToString() != "192.168.0.105")
-                            {
-                                return Unauthorized(); // 401 Unauthorized status kodni qaytarish
-                            }
-                            else
-                            {
-                                var serviceResult = await _authService.LoginAsync(loginDto);
-                                return Ok(new { serviceResult.Result, serviceResult.Token });
-                            }
-                        }
-                    }
+                    islom = ipAddress.ToString();
+                    Console.WriteLine("Mijozning IPv4 manzili: " + ipAddress.ToString());
+                    await Console.Out.WriteLineAsync("Men quygan ipaddress : 172.20.10.11");
+                    break;
                 }
             }
-            return Ok();
+            await Console.Out.WriteLineAsync(islom);
+
+            if (islom == "172.20.10.11")
+            {
+                var serviceResult = await _authService.LoginAsync(loginDto);
+                return Ok(new { serviceResult.Result, serviceResult.Token });
+            }
+            else
+            {
+                return BadRequest(valResult.Errors.ToString());
+            }
         }
 
         [HttpPost("reset/send-code")]
