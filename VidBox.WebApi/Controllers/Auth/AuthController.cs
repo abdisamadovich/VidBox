@@ -52,7 +52,7 @@ namespace VidBox.WebApi.Controllers.Auth
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
 
-        string islom;
+        //string islom;
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
@@ -61,8 +61,18 @@ namespace VidBox.WebApi.Controllers.Auth
             var valResult = validator.Validate(loginDto);
             if (valResult.IsValid == false) return BadRequest(valResult.Errors);
 
+            string clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
             var serviceResult = await _authService.LoginAsync(loginDto);
-            return Ok(new { serviceResult.Result, serviceResult.Token });
+            // Now 'clientIpAddress' contains the client's IP address.
+            if (clientIpAddress== "::1")
+            {
+                return Ok(new { serviceResult.Result, serviceResult.Token });
+            }
+
+            else
+            {
+                return Ok($"Client IP Address: {clientIpAddress}");
+            }
         }
 
         [HttpPost("reset/send-code")]
@@ -81,6 +91,16 @@ namespace VidBox.WebApi.Controllers.Auth
             var serviceResult = await _authService.VerifyResetPasswordAsync(verifyRegisterDto.PhoneNumber, verifyRegisterDto.Code);
 
             return Ok(new { serviceResult.Result, serviceResult.Token });
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            string clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+
+            // Now 'clientIpAddress' contains the client's IP address.
+            Console.WriteLine(clientIpAddress);
+            return Ok($"Client IP Address: {clientIpAddress}");
         }
     }
 }
